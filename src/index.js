@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import paperImg from './assets/paper.png';
-import grassImg from './assets/grass_tileset/grass_tileset_16x16.png';
-import homeTilemap from './assets/tilemaps/home.json';
+import homeTiles from './assets/tilemaps/home.png';
 
 const WIDTH = 800;
 const HEIGHT = 600;
@@ -16,17 +15,25 @@ class HomeLand extends Phaser.Scene
     preload ()
     {
         this.load.image('paper', paperImg);
-        this.load.image('tiles', grassImg);
-        this.load.tilemapTiledJSON('map', homeTilemap);
+        this.load.image('homeTiles', homeTiles);
     }
       
     create ()
     {
         const centerX = WIDTH/2;
         const centerY = HEIGHT/2;
-        const map = this.make.tilemap({key: 'map'});
-        const tileset = map.addTilesetImage('grass', 'tiles');
-        map.createBlankLayer('homeground', tileset, 0, 0, WIDTH, HEIGHT);
+        const map = this.make.tilemap({
+            width: 20,
+            height: 20,
+            tileWidth: 16,
+            tileHeight: 16
+        });
+        const tileset = map.addTilesetImage('homeTiles', null, 16, 16);
+
+        const layer = map.createBlankLayer('homeground', tileset);
+        layer.randomize(0, 0, map.width, map.height, [0,1,2]);
+        layer.setDisplaySize(WIDTH, HEIGHT);
+
         this.add.image(centerX, centerY, 'paper');
     }
 
