@@ -1,4 +1,4 @@
-# Daemon, the Game
+# RGB, the Game
 
 Global Game Jam 2021 project
 
